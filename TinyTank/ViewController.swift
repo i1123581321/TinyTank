@@ -10,15 +10,81 @@ import RealityKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var arView: ARView!
+    @IBOutlet weak var arView: ARView!
+    
+    var tankAnchor:TinyToyTank._TinyToyTank?
+    var isPlaying = false
+    
+    @IBAction func turretLeft(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.turretLeft.post()
+        isPlaying = false
+    }
+    
+    @IBAction func cannonFire(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.cannonFire.post()
+        isPlaying = false
+    }
+    
+    @IBAction func turretRight(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.turretRight.post()
+        isPlaying = false
+    }
+    
+    @IBAction func tankLeft(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.tankLeft.post()
+        isPlaying = false
+    }
+    
+    @IBAction func tankForward(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.tankForward.post()
+        isPlaying = false
+    }
+    
+    @IBAction func tankRight(_ sender: UIButton) {
+        if isPlaying{
+            return
+        }
+        isPlaying = true
+        tankAnchor?.notifications.tankRight.post()
+        isPlaying = false
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the "Box" scene from the "Experience" Reality File
-        let boxAnchor = try! Experience.loadBox()
+        
+        do {
+            tankAnchor = try TinyToyTank.load_TinyToyTank()
+        } catch {
+            print(error.localizedDescription)
+        }
         
         // Add the box anchor to the scene
-        arView.scene.anchors.append(boxAnchor)
+//        arView.scene.anchors.append(tankAnchor!)
+        if let anchor = tankAnchor {
+            arView.scene.anchors.append(anchor)
+        }
     }
 }
